@@ -1607,13 +1607,19 @@
         }
     }
 
-    /* --- 5. Определение номера и чётности недели (ISO) --- */
+    /* --- 5. Определение номера и чётности недели (учебный календарь ПГУ) --- */
     function getWeekParity(d) {
         var dateObj = d || new Date();
-        var date = new Date(Date.UTC(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate()));
-        date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
-        var yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-        var weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+        // Находим понедельник текущей недели
+        var dayOfWeek = dateObj.getDay(); // 0 = Вс, 1 = Пн ... 6 = Сб
+        var daysToMonday = (dayOfWeek + 6) % 7;
+        var monday = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate() - daysToMonday);
+        monday.setHours(0, 0, 0, 0);
+
+        // Опорный понедельник 1-й учебной недели: 31 августа 2026 г. (семестр с 1 сентября 2026 г.)
+        var refMonday = new Date(2026, 7, 31, 0, 0, 0, 0); // месяц 7 = август в JS
+        var diffDays = Math.round((monday.getTime() - refMonday.getTime()) / 86400000);
+        var weekNo = Math.floor(diffDays / 7) + 1;
         var isEven = weekNo % 2 === 0;
         return { weekNo: weekNo, isEven: isEven, label: isEven ? 'Чётная неделя' : 'Нечётная неделя' };
     }
