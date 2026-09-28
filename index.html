@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Расписание занятий и звонков</title>
+    <title>Расписание пар</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Расписание пар ПГУ">
+    <meta name="application-name" content="Расписание пар ПГУ">
+    <meta name="theme-color" content="#ffb6c1" id="meta-theme-color">
+    <link rel="manifest" href="manifest.json">
     <style>
         /* =========================================================
            1. ЦВЕТОВЫЕ ТЕМЫ (CSS Custom Properties)
@@ -73,13 +79,34 @@
             --next-badge-color: #ffffff;
             --toast-bg: #7b1126;
             --toast-color: #ffffff;
+
+            /* Интерактивная подсветка преподавателей и аудиторий (Тема: Ромашки) */
+            --highlight-match-bg: rgba(225, 29, 72, 0.13);
+            --highlight-match-color: #881337;
+            --highlight-match-border: 1.5px solid rgba(225, 29, 72, 0.45);
+            --highlight-match-shadow: 0 0 0 2px rgba(225, 29, 72, 0.12), 0 2px 8px rgba(184, 50, 83, 0.15);
+            --highlight-row-accent: #e11d48;
+            --highlight-row-bg: rgba(255, 228, 230, 0.45);
+
+            /* Бейджи типов пар (Тема: Ромашки) */
+            --badge-lecture-bg: rgba(225, 29, 72, 0.10);
+            --badge-lecture-color: #9f1239;
+            --badge-lecture-border: 1px solid rgba(225, 29, 72, 0.25);
+
+            --badge-practice-bg: rgba(217, 119, 6, 0.12);
+            --badge-practice-color: #92400e;
+            --badge-practice-border: 1px solid rgba(217, 119, 6, 0.25);
+
+            --badge-lab-bg: rgba(184, 50, 83, 0.10);
+            --badge-lab-color: #881337;
+            --badge-lab-border: 1px solid rgba(184, 50, 83, 0.25);
         }
 
         /* Тема 2: Нейтральная светлая (Slate / Minimalist Light) */
         body.theme-neutral {
             --bg-color: #f1f5f9;
-            --bg-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px), radial-gradient(#cbd5e1 1.2px, #f1f5f9 1.2px);
-            --bg-size: 28px 28px;
+            --bg-image: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
+            --bg-size: auto;
             --text-main: #334155;
             --title-color: #0f172a;
             --header-title-color: #1e293b;
@@ -134,13 +161,34 @@
             --next-badge-color: #ffffff;
             --toast-bg: #1e293b;
             --toast-color: #ffffff;
+
+            /* Интерактивная подсветка (Тема: Нейтральная) */
+            --highlight-match-bg: rgba(37, 99, 235, 0.10);
+            --highlight-match-color: #1d4ed8;
+            --highlight-match-border: 1.5px solid rgba(37, 99, 235, 0.45);
+            --highlight-match-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12), 0 2px 6px rgba(37, 99, 235, 0.12);
+            --highlight-row-accent: #2563eb;
+            --highlight-row-bg: rgba(239, 246, 255, 0.65);
+
+            /* Бейджи типов пар (Тема: Нейтральная) */
+            --badge-lecture-bg: rgba(37, 99, 235, 0.08);
+            --badge-lecture-color: #1d4ed8;
+            --badge-lecture-border: 1px solid rgba(37, 99, 235, 0.22);
+
+            --badge-practice-bg: rgba(15, 118, 110, 0.08);
+            --badge-practice-color: #0f766e;
+            --badge-practice-border: 1px solid rgba(15, 118, 110, 0.22);
+
+            --badge-lab-bg: rgba(109, 40, 217, 0.08);
+            --badge-lab-color: #5b21b6;
+            --badge-lab-border: 1px solid rgba(109, 40, 217, 0.22);
         }
 
         /* Тема 3: Тёмная (Dark Slate / Deep Graphite) */
         body.theme-dark {
-            --bg-color: #0b0f17;
-            --bg-image: radial-gradient(rgba(255,255,255,0.06) 1.2px, transparent 1.2px), radial-gradient(rgba(255,255,255,0.06) 1.2px, #0b0f17 1.2px);
-            --bg-size: 28px 28px;
+            --bg-color: #090d16;
+            --bg-image: linear-gradient(180deg, #0d121d 0%, #060910 100%);
+            --bg-size: auto;
             --text-main: #94a3b8;
             --title-color: #f8fafc;
             --header-title-color: #f1f5f9;
@@ -195,6 +243,27 @@
             --next-badge-color: #ffffff;
             --toast-bg: #3b82f6;
             --toast-color: #ffffff;
+
+            /* Интерактивная подсветка (Тема: Тёмная) */
+            --highlight-match-bg: rgba(59, 130, 246, 0.22);
+            --highlight-match-color: #93c5fd;
+            --highlight-match-border: 1.5px solid rgba(96, 165, 250, 0.6);
+            --highlight-match-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25), 0 0 12px rgba(59, 130, 246, 0.35);
+            --highlight-row-accent: #3b82f6;
+            --highlight-row-bg: rgba(30, 58, 138, 0.25);
+
+            /* Бейджи типов пар (Тема: Тёмная) */
+            --badge-lecture-bg: rgba(59, 130, 246, 0.14);
+            --badge-lecture-color: #93c5fd;
+            --badge-lecture-border: 1px solid rgba(96, 165, 250, 0.30);
+
+            --badge-practice-bg: rgba(20, 184, 166, 0.14);
+            --badge-practice-color: #5eead4;
+            --badge-practice-border: 1px solid rgba(20, 184, 166, 0.30);
+
+            --badge-lab-bg: rgba(168, 85, 247, 0.14);
+            --badge-lab-color: #d8b4fe;
+            --badge-lab-border: 1px solid rgba(168, 85, 247, 0.30);
         }
 
         /* =========================================================
@@ -224,6 +293,7 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
+            padding-bottom: 100px;
         }
 
         /* =========================================================
@@ -346,6 +416,16 @@
             transition: all 0.2s ease;
             user-select: none;
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .theme-icon {
+            display: inline-block;
+            vertical-align: middle;
+            flex-shrink: 0;
         }
 
         .pill-btn.active {
@@ -358,26 +438,120 @@
             opacity: 0.8;
         }
 
-        .share-btn {
-            border: none;
-            background: var(--ctrl-pill-bg);
-            border: 1px solid var(--ctrl-pill-border);
-            color: var(--header-title-color);
-            font-size: 0.82rem;
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 16px;
+
+        /* Интерактивная подсветка преподавателей и аудиторий по клику */
+        .clickable {
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            margin-left: auto;
+            transition: all 0.18s ease;
+            border-radius: 6px;
+            padding: 1px 5px;
+            margin: -1px -2px;
+            display: inline-block;
+            vertical-align: baseline;
         }
 
-        .share-btn:hover {
-            background: var(--ctrl-btn-active-bg);
-            box-shadow: var(--ctrl-btn-active-shadow);
+        .clickable:hover {
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        body.theme-dark .clickable:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .highlighted-match {
+            background: var(--highlight-match-bg) !important;
+            color: var(--highlight-match-color) !important;
+            font-weight: 700 !important;
+            border: var(--highlight-match-border) !important;
+            border-radius: 6px !important;
+            box-shadow: var(--highlight-match-shadow) !important;
+        }
+
+        .lesson-item.highlighted-parent {
+            box-shadow: inset 4px 0 0 var(--highlight-row-accent);
+            background: var(--highlight-row-bg) !important;
+        }
+
+        /* Подсветка актуальности по чётности недели */
+        .parity-indicator {
+            display: inline-block;
+            padding: 1.5px 7px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-top: 3px;
+            transition: all 0.2s ease;
+            width: fit-content;
+        }
+
+        .parity-indicator.parity-active {
+            background: var(--live-badge-bg);
+            color: var(--live-badge-color);
+            font-weight: 700;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .parity-indicator.parity-inactive {
+            opacity: 0.45;
+            background: rgba(128, 128, 128, 0.12);
+            color: var(--meta-color);
+        }
+
+        /* Бейджи типа занятий: Лекция / Практика / Лаб (привязаны к теме) */
+        .type-badge {
+            display: inline-block !important;
+            width: auto !important;
+            font-size: 0.72rem !important;
+            font-weight: 700 !important;
+            text-transform: lowercase !important;
+            letter-spacing: normal !important;
+            padding: 1px 7px;
+            border-radius: 6px;
+            vertical-align: baseline;
+            line-height: 1.35;
+            margin-left: 5px;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        .type-badge.lecture {
+            background: var(--badge-lecture-bg);
+            color: var(--badge-lecture-color);
+            border: var(--badge-lecture-border);
+        }
+
+        .type-badge.practice {
+            background: var(--badge-practice-bg);
+            color: var(--badge-practice-color);
+            border: var(--badge-practice-border);
+        }
+
+        .type-badge.lab {
+            background: var(--badge-lab-bg);
+            color: var(--badge-lab-color);
+            border: var(--badge-lab-border);
+        }
+
+        /* Примечание по немецкому языку */
+        .sub-lang-note {
+            font-size: 0.78rem;
+            color: var(--meta-color);
+            margin-top: 5px;
+            font-style: italic;
+            line-height: 1.35;
+            text-transform: none;
+        }
+
+        .sub-lang-note .clickable {
+            display: inline-block;
+            font-style: normal;
+            text-transform: none;
+            font-weight: 600;
+            padding: 0 4px;
+            margin: 0 1px;
+            vertical-align: baseline;
+            white-space: nowrap;
         }
 
         /* =========================================================
@@ -389,46 +563,24 @@
             gap: 8px;
         }
 
-        .tabs-nav {
-            display: flex;
-            gap: 8px;
-            background: var(--nav-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 6px;
-            border-radius: 16px;
-            border: var(--nav-border);
-            box-shadow: var(--card-shadow);
-        }
-
-        .tab-btn {
-            flex: 1;
-            background: var(--nav-btn-bg);
-            border: none;
-            padding: 10px 16px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--nav-btn-color);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .tab-btn.active {
-            background: var(--nav-btn-active-bg);
-            color: var(--nav-btn-active-color);
-            box-shadow: var(--nav-btn-active-shadow);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
-        }
-
-        /* Быстрый переход по дням */
+        /* Быстрый переход по дням (Sticky Bar с эффектом стекла) */
         .days-quick-nav {
             display: flex;
             gap: 6px;
             overflow-x: auto;
-            padding: 4px 2px;
+            padding: 6px;
             scrollbar-width: none;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 16px;
+            border: 1px solid var(--ctrl-pill-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.25s ease;
         }
 
         .days-quick-nav::-webkit-scrollbar {
@@ -437,24 +589,29 @@
 
         .day-jump-btn {
             flex: 1;
-            min-width: 48px;
-            padding: 7px 10px;
+            min-width: 44px;
+            padding: 8px 10px;
             border-radius: 12px;
-            border: 1px solid var(--ctrl-pill-border);
-            background: var(--nav-bg);
-            color: var(--text-main);
-            font-size: 0.85rem;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--nav-btn-color);
+            font-size: 0.88rem;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
 
-        .day-jump-btn.today {
-            border-color: var(--live-badge-bg);
+        .day-jump-btn:hover {
+            background: var(--ctrl-btn-active-bg);
             color: var(--header-title-color);
-            font-weight: 800;
+        }
+
+        .day-jump-btn.active {
+            background: var(--nav-btn-active-bg);
+            color: var(--nav-btn-active-color);
+            box-shadow: var(--nav-btn-active-shadow);
         }
 
         .day-jump-btn.today::after {
@@ -469,32 +626,30 @@
             background: var(--live-badge-bg);
         }
 
-        .day-jump-btn:hover {
-            background: var(--ctrl-btn-active-bg);
+        .day-jump-btn.active.today::after {
+            background: #ffffff;
         }
 
         /* =========================================================
            5. КАРТОЧКИ РАСПИСАНИЯ
            ========================================================= */
+        .schedule-main,
         .tab-content {
-            display: none;
+            display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
-        .tab-content.active {
-            display: flex;
-        }
-
         .day-card {
             background: var(--card-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 18px;
             box-shadow: var(--card-shadow);
             overflow: hidden;
             border: var(--card-border);
-            scroll-margin-top: 16px;
+            scroll-margin-top: 72px;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .day-card.is-today {
@@ -549,10 +704,23 @@
 
         .lesson-item {
             display: grid;
-            grid-template-columns: 50px 1fr;
+            grid-template-columns: 58px 1fr;
             border-bottom: var(--lesson-border);
             background: var(--lesson-bg);
             position: relative;
+            transition: background 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .lesson-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        body.theme-daisy .lesson-item:hover {
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        body.theme-neutral .lesson-item:hover {
+            background: #f8fafc;
         }
 
         .lesson-item:last-child {
@@ -580,25 +748,29 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--lesson-num-color);
-            font-size: 1rem;
+            font-size: 1.15rem;
             border-right: var(--lesson-num-border);
-            padding: 6px 2px;
+            padding: 10px 4px;
             gap: 2px;
+            user-select: none;
         }
 
         .lesson-time-micro {
-            font-size: 0.62rem;
+            font-size: 0.68rem;
             font-weight: 600;
             opacity: 0.85;
+            letter-spacing: -0.2px;
         }
 
         .lesson-content {
-            padding: 12px 16px;
+            padding: 12px 18px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            justify-content: center;
+            gap: 7px;
+            min-width: 0;
         }
 
         .lesson-title-row {
@@ -611,15 +783,20 @@
 
         .lesson-title {
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.02rem;
             color: var(--title-color);
+            line-height: 1.35;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
         }
 
         .lesson-title.shared {
             color: var(--lesson-title-shared-color);
-            text-align: center;
-            padding: 4px 0;
-            width: 100%;
+            text-align: left;
+            padding: 2px 0;
+            width: auto;
         }
 
         .live-tag {
@@ -672,7 +849,7 @@
             display: none !important;
         }
 
-        .group-col span {
+        .group-col > .group-label {
             display: block;
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -711,18 +888,7 @@
             font-weight: 600;
             display: block;
             margin-top: 2px;
-        }
-
-        /* Расписание звонков */
-        .bell-time {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--bell-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 4px 0;
+            text-transform: none !important;
         }
 
         /* Всплывающее уведомление Toast */
@@ -750,13 +916,17 @@
         }
 
         @media (min-width: 768px) {
-            .schedule-list {
-                display: block;
-                overflow-x: auto;
+            .container {
+                max-width: 960px;
             }
             .lesson-item {
-                display: table;
-                width: 100%;
+                grid-template-columns: 66px 1fr;
+            }
+            .lesson-num-box {
+                font-size: 1.25rem;
+            }
+            .lesson-time-micro {
+                font-size: 0.72rem;
             }
         }
 
@@ -764,10 +934,21 @@
             .controls-row {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 8px;
             }
-            .share-btn {
-                margin-left: 0;
+            .control-group {
+                justify-content: space-between;
+                width: 100%;
+            }
+            .pill-switch {
+                flex: 1;
                 justify-content: center;
+            }
+            .pill-btn {
+                flex: 1;
+                text-align: center;
+                padding: 6px 6px;
+                font-size: 0.78rem;
             }
         }
     </style>
@@ -782,11 +963,11 @@
     <header class="top-header">
         <div class="header-main-row">
             <div class="header-title-box">
-                <h1 class="site-title">Расписание занятий</h1>
+                <h1 class="site-title">Расписание пар</h1>
                 <div class="live-status-line">
                     <span id="current-date-text">Загрузка даты...</span>
                     <span class="status-badge week-parity" id="week-parity-badge">Неделя</span>
-                    <span class="status-badge" id="live-lesson-badge">Проверка звонков...</span>
+                    <span class="status-badge" id="live-lesson-badge">Проверка расписания...</span>
                 </div>
             </div>
         </div>
@@ -796,52 +977,66 @@
             <div class="control-group">
                 <span class="control-label">Тема</span>
                 <div class="pill-switch" role="group" aria-label="Выбор темы оформления">
-                    <button type="button" class="pill-btn active" id="btn-theme-daisy" onclick="setTheme('daisy')">Ромашки</button>
-                    <button type="button" class="pill-btn" id="btn-theme-neutral" onclick="setTheme('neutral')">Нейтральная</button>
-                    <button type="button" class="pill-btn" id="btn-theme-dark" onclick="setTheme('dark')">Тёмная</button>
+                    <button type="button" class="pill-btn active" id="btn-theme-daisy" onclick="setTheme('daisy')">
+                        <svg class="theme-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <g stroke-width="1.3">
+                                <ellipse cx="12" cy="5.8" rx="1.5" ry="3.8" transform="rotate(0 12 12)"/>
+                                <ellipse cx="12" cy="5.8" rx="1.5" ry="3.8" transform="rotate(45 12 12)"/>
+                                <ellipse cx="12" cy="5.8" rx="1.5" ry="3.8" transform="rotate(90 12 12)"/>
+                                <ellipse cx="12" cy="5.8" rx="1.5" ry="3.8" transform="rotate(135 12 12)"/>
+                                <ellipse cx="12" cy="5.8" rx="1.5" ry="3.8" transform="rotate(180 12 12)"/>
+                                <ellipse cx="12" cy="5.8" rx="1.5" ry="3.8" transform="rotate(225 12 12)"/>
+                                <ellipse cx="12" cy="5.8" rx="1.5" ry="3.8" transform="rotate(270 12 12)"/>
+                                <ellipse cx="12" cy="5.8" rx="1.5" ry="3.8" transform="rotate(315 12 12)"/>
+                            </g>
+                            <circle cx="12" cy="12" r="2.8" fill="currentColor" stroke="none"/>
+                        </svg>
+                        <span>Ромашки</span>
+                    </button>
+                    <button type="button" class="pill-btn" id="btn-theme-neutral" onclick="setTheme('neutral')">
+                        <svg class="theme-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4.2" fill="currentColor" fill-opacity="0.2"/>
+                            <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/>
+                        </svg>
+                        <span>Нейтральная</span>
+                    </button>
+                    <button type="button" class="pill-btn" id="btn-theme-dark" onclick="setTheme('dark')">
+                        <svg class="theme-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                        <span>Тёмная</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Фильтр подгрупп -->
+            <!-- Фильтр групп -->
             <div class="control-group">
                 <span class="control-label">Группа</span>
-                <div class="pill-switch" role="group" aria-label="Выбор подгруппы">
+                <div class="pill-switch" role="group" aria-label="Выбор группы">
                     <button type="button" class="pill-btn active" id="btn-group-all" onclick="setSubgroup('all')">Все</button>
-                    <button type="button" class="pill-btn" id="btn-group-1" onclick="setSubgroup('1')">1 подгруппа</button>
-                    <button type="button" class="pill-btn" id="btn-group-2" onclick="setSubgroup('2')">2 подгруппа</button>
+                    <button type="button" class="pill-btn" id="btn-group-1" onclick="setSubgroup('1')">1 группа</button>
+                    <button type="button" class="pill-btn" id="btn-group-2" onclick="setSubgroup('2')">2 группа</button>
                 </div>
             </div>
-
-            <!-- Кнопка копирования расписания на сегодня -->
-            <button type="button" class="share-btn" onclick="copyTodaySchedule()" title="Скопировать расписание на сегодня">
-                Скопировать на сегодня
-            </button>
         </div>
     </header>
 
     <!-- =====================================================
-         НАВИГАЦИЯ: ВКЛАДКИ И БЫСТРЫЙ ПЕРЕХОД ПО ДНЯМ
+         БЫСТРЫЙ ПЕРЕХОД ПО ДНЯМ НЕДЕЛИ
          ===================================================== -->
-    <nav class="nav-wrapper">
-        <div class="tabs-nav">
-            <button type="button" class="tab-btn active" onclick="switchTab('lessons', this)">Расписание занятий</button>
-            <button type="button" class="tab-btn" onclick="switchTab('bells', this)">Расписание звонков</button>
-        </div>
-
-        <div class="days-quick-nav" id="days-nav-bar">
-            <button type="button" class="day-jump-btn" onclick="scrollToDay('day-mon')">Пн</button>
-            <button type="button" class="day-jump-btn" onclick="scrollToDay('day-tue')">Вт</button>
-            <button type="button" class="day-jump-btn" onclick="scrollToDay('day-wed')">Ср</button>
-            <button type="button" class="day-jump-btn" onclick="scrollToDay('day-thu')">Чт</button>
-            <button type="button" class="day-jump-btn" onclick="scrollToDay('day-fri')">Пт</button>
-            <button type="button" class="day-jump-btn" onclick="scrollToDay('day-sat')">Сб</button>
-        </div>
+    <nav class="days-quick-nav" id="days-nav-bar" aria-label="Быстрый переход по дням недели">
+        <button type="button" class="day-jump-btn" id="nav-btn-mon" onclick="scrollToDay('day-mon')">Пн</button>
+        <button type="button" class="day-jump-btn" id="nav-btn-tue" onclick="scrollToDay('day-tue')">Вт</button>
+        <button type="button" class="day-jump-btn" id="nav-btn-wed" onclick="scrollToDay('day-wed')">Ср</button>
+        <button type="button" class="day-jump-btn" id="nav-btn-thu" onclick="scrollToDay('day-thu')">Чт</button>
+        <button type="button" class="day-jump-btn" id="nav-btn-fri" onclick="scrollToDay('day-fri')">Пт</button>
+        <button type="button" class="day-jump-btn" id="nav-btn-sat" onclick="scrollToDay('day-sat')">Сб</button>
     </nav>
 
     <!-- =====================================================
-         ВКЛАДКА 1: РАСПИСАНИЕ ЗАНЯТИЙ
+         РАСПИСАНИЕ ПАР
          ===================================================== -->
-    <main id="tab-lessons" class="tab-content active">
+    <main id="tab-lessons" class="schedule-main tab-content active">
         
         <!-- ПОНЕДЕЛЬНИК -->
         <div class="day-card" id="day-mon" data-day-index="1">
@@ -860,11 +1055,11 @@
                     </div>
                     <div class="lesson-content">
                         <div class="lesson-title-row">
-                            <div class="lesson-title shared">История России (лекция)</div>
+                            <div class="lesson-title shared">История России <span class="type-badge lecture">лекция</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">доц. В.А. Содоль</span>
-                            <span class="room">к. 4, 306</span>
+                            <span class="teacher clickable" onclick="highlightFilter('И.А. Четвериков')">И.А. Четвериков</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 4, 306')">к. 4, 306</span>
                         </div>
                     </div>
                 </div>
@@ -876,11 +1071,11 @@
                     </div>
                     <div class="lesson-content">
                         <div class="lesson-title-row">
-                            <div class="lesson-title shared">История рекламы и PR (лекция)</div>
+                            <div class="lesson-title shared">История рекламы и PR <span class="type-badge lecture">лекция</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">ст.пр. Л.В. Колодка</span>
-                            <span class="room">к. 4, 209</span>
+                            <span class="teacher clickable" onclick="highlightFilter('Л.В. Колодка')">Л.В. Колодка</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 4, 209')">к. 4, 209</span>
                         </div>
                     </div>
                 </div>
@@ -892,11 +1087,11 @@
                     </div>
                     <div class="lesson-content">
                         <div class="lesson-title-row">
-                            <div class="lesson-title shared">Речевая коммуникация и самопрезентация в PR (лекция)</div>
+                            <div class="lesson-title shared">Речевая коммуникация и самопрезентация в PR <span class="type-badge lecture">лекция</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">пр. С.Н. Солянкина</span>
-                            <span class="room">к. 4, 209</span>
+                            <span class="teacher clickable" onclick="highlightFilter('С.Н. Солянкина')">С.Н. Солянкина</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 4, 209')">к. 4, 209</span>
                         </div>
                     </div>
                 </div>
@@ -908,19 +1103,19 @@
                     </div>
                     <div class="lesson-content">
                         <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>История рекламы и PR (практика)</div>
-                            <div class="group-col group-2"><span>Группа 2</span>История России (практика)</div>
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>История рекламы и PR <span class="type-badge practice">практика</span></div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>История России <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">ст.пр. Л.В. Колодка</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('Л.В. Колодка')">Л.В. Колодка</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">доц. В.А. Содоль</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('И.А. Четвериков')">И.А. Четвериков</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 110</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 122</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 122')">к. Б, 122</span>
                             </span>
                         </div>
                     </div>
@@ -945,45 +1140,36 @@
                     </div>
                     <div class="lesson-content">
                         <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>История России (практика)</div>
-                            <div class="group-col group-2"><span>Группа 2</span>Официальный язык (молдавский) (пр.)</div>
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>История России <span class="type-badge practice">практика</span></div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>История рекламы и PR <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">ст.пр. И.А. Четвериков</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('И.А. Четвериков')">И.А. Четвериков</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">доц. Е.К. Бешляга</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Л.В. Колодка')">Л.В. Колодка</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 122</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 122')">к. Б, 122</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 110</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lesson-item" data-lesson-num="2">
+                <div class="lesson-item shared-row" data-lesson-num="2">
                     <div class="lesson-num-box">
                         <span>2</span>
                         <span class="lesson-time-micro">9:40</span>
                     </div>
                     <div class="lesson-content">
-                        <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>Официальный язык (молдавский) (пр.)</div>
-                            <div class="group-col group-2"><span>Группа 2</span>История рекламы и PR (практика)</div>
+                        <div class="lesson-title-row">
+                            <div class="lesson-title shared">Официальный язык (молдавский) <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">
-                                <span class="subgroup-part group-1">доц. Е.К. Бешляга</span>
-                                <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">ст.пр. Л.В. Колодка</span>
-                            </span>
-                            <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 102</span>
-                                <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 110</span>
-                            </span>
+                            <span class="teacher clickable" onclick="highlightFilter('Е.К. Бешляга')">Е.К. Бешляга</span>
+                            <span class="room clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
                         </div>
                     </div>
                 </div>
@@ -996,41 +1182,55 @@
                     <div class="lesson-content">
                         <div class="groups-grid">
                             <div class="group-col group-1">
-                                <span>Группа 1</span>Речевая коммуникация и самопрезентация в PR (пр.)
-                                <span class="meta-info">(Чет.)</span>
+                                <span class="group-label">Группа 1</span>Речевая коммуникация и самопрезентация в PR <span class="type-badge practice">практика</span>
+                                <span class="meta-info parity-indicator" data-parity-type="even">(Чет.)</span>
                             </div>
                             <div class="group-col group-2">
-                                <span>Группа 2</span>Речевая коммуникация и самопрезентация в PR (пр.)
-                                <span class="meta-info">(Нечет.)</span>
+                                <span class="group-label">Группа 2</span>Речевая коммуникация и самопрезентация в PR <span class="type-badge practice">практика</span>
+                                <span class="meta-info parity-indicator" data-parity-type="odd">(Нечет.)</span>
                             </div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">пр. С.Н. Солянкина</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('С.Н. Солянкина')">С.Н. Солянкина</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">пр. С.Н. Солянкина</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('С.Н. Солянкина')">С.Н. Солянкина</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 110</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 102')">к. Б, 102</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 102</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 102')">к. Б, 102</span>
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lesson-item shared-row" data-lesson-num="4">
+                <div class="lesson-item" data-lesson-num="4">
                     <div class="lesson-num-box">
                         <span>4</span>
                         <span class="lesson-time-micro">13:05</span>
                     </div>
                     <div class="lesson-content">
-                        <div class="lesson-title-row">
-                            <div class="lesson-title shared">Иностранный язык (немецкий / французский) (практика)</div>
+                        <div class="groups-grid">
+                            <div class="group-col group-1">
+                                <span class="group-label">Группа 1</span>Иностранный язык (английский) <span class="type-badge practice">практика</span>
+                            </div>
+                            <div class="group-col group-2">
+                                <span class="group-label">Группа 2</span>Иностранный язык (английский) <span class="type-badge practice">практика</span>
+                                <div class="sub-lang-note">нем.: <span class="clickable" onclick="highlightFilter('А.В. Ледовская')">А.В. Ледовская</span> (<span class="clickable" onclick="highlightFilter('к. Б, 203')">к. Б, 203</span>)</div>
+                            </div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">—</span>
-                            <span class="room">к. Б, 231, 203, 212, 310</span>
+                            <span class="teacher">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('О.Н. Абахина')">О.Н. Абахина</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('О.Н. Абахина')">О.Н. Абахина</span>
+                            </span>
+                            <span class="room">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -1054,11 +1254,11 @@
                     </div>
                     <div class="lesson-content">
                         <div class="lesson-title-row">
-                            <div class="lesson-title shared">История России (лекция)</div>
+                            <div class="lesson-title shared">История России <span class="type-badge lecture">лекция</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">доц. В.А. Содоль</span>
-                            <span class="room">к. 4, 306</span>
+                            <span class="teacher clickable" onclick="highlightFilter('И.А. Четвериков')">И.А. Четвериков</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 4, 306')">к. 4, 306</span>
                         </div>
                     </div>
                 </div>
@@ -1070,11 +1270,11 @@
                     </div>
                     <div class="lesson-content">
                         <div class="lesson-title-row">
-                            <div class="lesson-title shared">Особенности восприятия и поведения аудитории в рекламе (лекция)</div>
+                            <div class="lesson-title shared">Особенности восприятия и поведения аудитории в рекламе <span class="type-badge lecture">лекция</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">доц. Т.В. Щерба</span>
-                            <span class="room">к. 4, 209</span>
+                            <span class="teacher clickable" onclick="highlightFilter('Т.В. Щерба')">Т.В. Щерба</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 4, 209')">к. 4, 209</span>
                         </div>
                     </div>
                 </div>
@@ -1086,19 +1286,19 @@
                     </div>
                     <div class="lesson-content">
                         <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>Иностранный язык (английский) (пр.)</div>
-                            <div class="group-col group-2"><span>Группа 2</span>Особенности восприятия и поведения аудитории в PR (пр.)</div>
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>Иностранный язык (английский) <span class="type-badge practice">практика</span></div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>Особенности восприятия и поведения аудитории в рекламе <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">ст.пр. И.И. Мирошникова</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('И.И. Мирошникова')">И.И. Мирошникова</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">доц. Т.В. Щерба</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Т.В. Щерба')">Т.В. Щерба</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 110</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 114</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 114')">к. Б, 114</span>
                             </span>
                         </div>
                     </div>
@@ -1111,19 +1311,19 @@
                     </div>
                     <div class="lesson-content">
                         <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>Особенности восприятия и поведения аудитории в PR (пр.)</div>
-                            <div class="group-col group-2"><span>Группа 2</span>Иностранный язык (английский) (пр.)</div>
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>Особенности восприятия и поведения аудитории в рекламе <span class="type-badge practice">практика</span></div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>Иностранный язык (английский) <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">доц. Т.В. Щерба</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('Т.В. Щерба')">Т.В. Щерба</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">ст.пр. И.И. Мирошникова</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('И.И. Мирошникова')">И.И. Мирошникова</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 114</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 114')">к. Б, 114</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 110</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
                             </span>
                         </div>
                     </div>
@@ -1149,23 +1349,23 @@
                     <div class="lesson-content">
                         <div class="groups-grid">
                             <div class="group-col group-1">
-                                <span>Группа 1</span>Цифровой инструментарий в PR (лек./лаб.)
-                                <span class="meta-info">(Чет. 1 подгр. / Нечет. 2 подгр.)</span>
+                                <span class="group-label">Группа 1</span>Цифровой инструментарий в PR <span class="type-badge lab">лекция / лаб.</span>
+                                <span class="meta-info">(Чет. 1 гр. / Нечет 2 гр.)</span>
                             </div>
                             <div class="group-col group-2">
-                                <span>Группа 2</span>Основы редактирования (лк./пр.)
+                                <span class="group-label">Группа 2</span>Основы редактирования <span class="type-badge lab">лекция / практика</span>
                             </div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">ст.пр. О.Ю. Федоренко</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('О.Ю. Федоренко')">О.Ю. Федоренко</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">пр. Н.В. Пильщикова</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Н.В. Пильщикова')">Н.В. Пильщикова</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 219</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 219')">к. Б, 219</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 114</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
                             </span>
                         </div>
                     </div>
@@ -1178,57 +1378,58 @@
                     </div>
                     <div class="lesson-content">
                         <div class="lesson-title-row">
-                            <div class="lesson-title shared">Официальный язык (украинский) (пр.)</div>
+                            <div class="lesson-title shared">Официальный язык (украинский) <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">доц. Е.Л. Якимович</span>
-                            <span class="room">к. Б, 102</span>
+                            <span class="teacher clickable" onclick="highlightFilter('Е.Л. Якимович')">Е.Л. Якимович</span>
+                            <span class="room clickable" onclick="highlightFilter('к. Б, 102')">к. Б, 102</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lesson-item" data-lesson-num="3">
+                <div class="lesson-item shared-row" data-lesson-num="3">
                     <div class="lesson-num-box">
                         <span>3</span>
                         <span class="lesson-time-micro">11:25</span>
                     </div>
                     <div class="lesson-content">
-                        <div class="groups-grid">
-                            <div class="group-col group-1">
-                                <span>Группа 1</span>Введение в профессиональную деятельность (лк./пр.)
-                            </div>
-                            <div class="group-col group-2">
-                                <span>Группа 2</span>Цифровой инструментарий в PR (лек./лаб.)
-                                <span class="meta-info">(Чет. 1 подгр. / Нечет. 2 подгр.)</span>
-                            </div>
+                        <div class="lesson-title-row">
+                            <div class="lesson-title shared">Цифровой инструментарий в PR <span class="type-badge lecture">лекция</span></div>
+                            <span class="meta-info">(Чет. 1 гр. / Нечет 2 гр.)</span>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">
-                                <span class="subgroup-part group-1">ст.пр. Л.В. Колодка</span>
-                                <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">ст.пр. О.Ю. Федоренко</span>
-                            </span>
-                            <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 110</span>
-                                <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 219</span>
-                            </span>
+                            <span class="teacher clickable" onclick="highlightFilter('О.Ю. Федоренко')">О.Ю. Федоренко</span>
+                            <span class="room clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lesson-item shared-row" data-lesson-num="4">
+                <div class="lesson-item" data-lesson-num="4">
                     <div class="lesson-num-box">
                         <span>4</span>
                         <span class="lesson-time-micro">13:05</span>
                     </div>
                     <div class="lesson-content">
-                        <div class="lesson-title-row">
-                            <div class="lesson-title shared">Иностранный язык (немецкий / французский) (практика)</div>
+                        <div class="groups-grid">
+                            <div class="group-col group-1">
+                                <span class="group-label">Группа 1</span>Иностранный язык (английский) <span class="type-badge practice">практика</span>
+                            </div>
+                            <div class="group-col group-2">
+                                <span class="group-label">Группа 2</span>Иностранный язык (английский) <span class="type-badge practice">практика</span>
+                                <div class="sub-lang-note">нем.: <span class="clickable" onclick="highlightFilter('А.В. Ледовская')">А.В. Ледовская</span> (<span class="clickable" onclick="highlightFilter('к. Б, 203')">к. Б, 203</span>)</div>
+                            </div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">—</span>
-                            <span class="room">к. Б, 231, 203, 212, 310</span>
+                            <span class="teacher">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('О.Н. Абахина')">О.Н. Абахина</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('О.Н. Абахина')">О.Н. Абахина</span>
+                            </span>
+                            <span class="room">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -1252,19 +1453,19 @@
                     </div>
                     <div class="lesson-content">
                         <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>Иностранный язык (английский) (пр.)</div>
-                            <div class="group-col group-2"><span>Группа 2</span>Введение в профессиональную деятельность (лк./пр.)</div>
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>Иностранный язык (английский) <span class="type-badge practice">практика</span></div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>Введение в профессиональную деятельность <span class="type-badge lab">лекция / практика</span></div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">ст.пр. И.И. Мирошникова</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('И.И. Мирошникова')">И.И. Мирошникова</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">ст.пр. Л.В. Колодка</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Л.В. Колодка')">Л.В. Колодка</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 114</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 114')">к. Б, 114</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 122</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 122')">к. Б, 122</span>
                             </span>
                         </div>
                     </div>
@@ -1277,19 +1478,19 @@
                     </div>
                     <div class="lesson-content">
                         <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>Кураторский час</div>
-                            <div class="group-col group-2"><span>Группа 2</span>Иностранный язык (английский) (пр.)</div>
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>Введение в профессиональную деятельность <span class="type-badge lab">лекция / практика</span></div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>Иностранный язык (английский) <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">—</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('Л.В. Колодка')">Л.В. Колодка</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">ст.пр. И.И. Мирошникова</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('И.И. Мирошникова')">И.И. Мирошникова</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 122</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 122')">к. Б, 122</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 114</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 114')">к. Б, 114</span>
                             </span>
                         </div>
                     </div>
@@ -1302,11 +1503,11 @@
                     </div>
                     <div class="lesson-content">
                         <div class="lesson-title-row">
-                            <div class="lesson-title shared">Физическая культура и спорт (лекция)</div>
+                            <div class="lesson-title shared">Физическая культура и спорт <span class="type-badge lecture">лекция</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">ст. преп. И.П. Черниченко</span>
-                            <span class="room">к. 4, 303</span>
+                            <span class="teacher clickable" onclick="highlightFilter('И.П. Черниченко')">И.П. Черниченко</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 4, 303')">к. 4, 303</span>
                         </div>
                     </div>
                 </div>
@@ -1318,11 +1519,16 @@
                     </div>
                     <div class="lesson-content">
                         <div class="lesson-title-row">
-                            <div class="lesson-title shared">Физическая культура и спорт (практика)</div>
+                            <div class="lesson-title shared">Физическая культура и спорт <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">ст. преп. И.П. Черниченко, ст.преп. А.А.Диденко, доц. Т.В.Романюк</span>
-                            <span class="room">Студ. город</span>
+                            <span class="teacher">
+                                <span class="clickable" onclick="highlightFilter('И.П. Черниченко')">И.П. Черниченко</span>,
+                                <span class="clickable" onclick="highlightFilter('Т.В. Романюк')">Т.В. Романюк</span>,
+                                <span class="clickable" onclick="highlightFilter('Т.Н. Чебан')">Т.Н. Чебан</span>,
+                                <span class="clickable" onclick="highlightFilter('Е.С. Федотова')">Е.С. Федотова</span>
+                            </span>
+                            <span class="room clickable" onclick="highlightFilter('Студ. город')">Студ. город</span>
                         </div>
                     </div>
                 </div>
@@ -1339,43 +1545,43 @@
                 </div>
             </div>
             <div class="schedule-list">
-                <div class="lesson-item" data-lesson-num="1">
+                <div class="lesson-item shared-row" data-lesson-num="1">
                     <div class="lesson-num-box">
                         <span>1</span>
                         <span class="lesson-time-micro">8:00</span>
                     </div>
                     <div class="lesson-content">
-                        <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>Основы редактирования (лк./пр.)</div>
-                            <div class="group-col group-2"><span>Группа 2</span>Основы российской государственности (пр.)</div>
+                        <div class="lesson-title-row">
+                            <div class="lesson-title shared">Основы российской государственности <span class="type-badge lecture">лекция</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">
-                                <span class="subgroup-part group-1">пр. Н.В. Пильщикова</span>
-                                <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">проф. С.А. Осипова</span>
-                            </span>
-                            <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 114</span>
-                                <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">к. Б, 102</span>
-                            </span>
+                            <span class="teacher clickable" onclick="highlightFilter('С.А. Осипова')">С.А. Осипова</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 4, 303')">к. 4, 303</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lesson-item shared-row" data-lesson-num="2">
+                <div class="lesson-item" data-lesson-num="2">
                     <div class="lesson-num-box">
                         <span>2</span>
                         <span class="lesson-time-micro">9:40</span>
                     </div>
                     <div class="lesson-content">
-                        <div class="lesson-title-row">
-                            <div class="lesson-title shared">Основы российской государственности (лекция)</div>
+                        <div class="groups-grid">
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>Основы редактирования <span class="type-badge lab">лекция / практика</span></div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>Основы российской государственности <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher">проф. С.А. Осипова</span>
-                            <span class="room">к. 4, 303</span>
+                            <span class="teacher">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('Н.В. Пильщикова')">Н.В. Пильщикова</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('С.А. Осипова')">С.А. Осипова</span>
+                            </span>
+                            <span class="room">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 308')">к. Б, 308</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -1387,19 +1593,22 @@
                     </div>
                     <div class="lesson-content">
                         <div class="groups-grid">
-                            <div class="group-col group-1"><span>Группа 1</span>Основы российской государственности (пр.)</div>
-                            <div class="group-col group-2"><span>Группа 2</span>—</div>
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>Основы российской государственности <span class="type-badge practice">практика</span></div>
+                            <div class="group-col group-2">
+                                <span class="group-label">Группа 2</span>Цифровой инструментарий в PR <span class="type-badge lab">лекция / лаб.</span>
+                                <span class="meta-info">(Чет. 1 гр. / Нечет 2 гр.)</span>
+                            </div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
-                                <span class="subgroup-part group-1">проф. С.А. Осипова</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('С.А. Осипова')">С.А. Осипова</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">—</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('О.Ю. Федоренко')">О.Ю. Федоренко</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1">к. Б, 102</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 308')">к. Б, 308</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2">—</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 202')">к. Б, 202</span>
                             </span>
                         </div>
                     </div>
@@ -1408,68 +1617,6 @@
         </div>
 
     </main>
-
-    <!-- =====================================================
-         ВКЛАДКА 2: РАСПИСАНИЕ ЗВОНКОВ
-         ===================================================== -->
-    <section id="tab-bells" class="tab-content">
-        <div class="day-card">
-            <div class="day-header">
-                <span>Расписание звонков</span>
-                <span class="day-header-badge">8 пар</span>
-            </div>
-            <div class="schedule-list">
-                <div class="lesson-item shared-row" data-bell-num="1">
-                    <div class="lesson-num-box">1</div>
-                    <div class="lesson-content">
-                        <div class="bell-time"><span>1 пара</span> <span>8:00 – 9:30</span></div>
-                    </div>
-                </div>
-                <div class="lesson-item shared-row" data-bell-num="2">
-                    <div class="lesson-num-box">2</div>
-                    <div class="lesson-content">
-                        <div class="bell-time"><span>2 пара</span> <span>9:40 – 11:10</span></div>
-                    </div>
-                </div>
-                <div class="lesson-item shared-row" data-bell-num="3">
-                    <div class="lesson-num-box">3</div>
-                    <div class="lesson-content">
-                        <div class="bell-time"><span>3 пара</span> <span>11:25 – 12:55</span></div>
-                    </div>
-                </div>
-                <div class="lesson-item shared-row" data-bell-num="4">
-                    <div class="lesson-num-box">4</div>
-                    <div class="lesson-content">
-                        <div class="bell-time"><span>4 пара</span> <span>13:05 – 14:35</span></div>
-                    </div>
-                </div>
-                <div class="lesson-item shared-row" data-bell-num="5">
-                    <div class="lesson-num-box">5</div>
-                    <div class="lesson-content">
-                        <div class="bell-time"><span>5 пара</span> <span>14:45 – 16:15</span></div>
-                    </div>
-                </div>
-                <div class="lesson-item shared-row" data-bell-num="6">
-                    <div class="lesson-num-box">6</div>
-                    <div class="lesson-content">
-                        <div class="bell-time"><span>6 пара</span> <span>16:30 – 18:00</span></div>
-                    </div>
-                </div>
-                <div class="lesson-item shared-row" data-bell-num="7">
-                    <div class="lesson-num-box">7</div>
-                    <div class="lesson-content">
-                        <div class="bell-time"><span>7 пара</span> <span>18:10 – 19:40</span></div>
-                    </div>
-                </div>
-                <div class="lesson-item shared-row" data-bell-num="8">
-                    <div class="lesson-num-box">8</div>
-                    <div class="lesson-content">
-                        <div class="bell-time"><span>8 пара</span> <span>19:50 – 21:20</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 </div>
 
@@ -1514,35 +1661,26 @@
         { num: 1, start: 8 * 60,       end: 9 * 60 + 30,  timeStr: '8:00 – 9:30' },
         { num: 2, start: 9 * 60 + 40,  end: 11 * 60 + 10, timeStr: '9:40 – 11:10' },
         { num: 3, start: 11 * 60 + 25, end: 12 * 60 + 55, timeStr: '11:25 – 12:55' },
-        { num: 4, start: 13 * 60 + 5,  end: 14 * 60 + 35, timeStr: '13:05 – 14:35' },
-        { num: 5, start: 14 * 60 + 45, end: 16 * 60 + 15, timeStr: '14:45 – 16:15' },
-        { num: 6, start: 16 * 60 + 30, end: 18 * 60,      timeStr: '16:30 – 18:00' },
-        { num: 7, start: 18 * 60 + 10, end: 19 * 60 + 40, timeStr: '18:10 – 19:40' },
-        { num: 8, start: 19 * 60 + 50, end: 21 * 60 + 20, timeStr: '19:50 – 21:20' }
+        { num: 4, start: 13 * 60 + 5,  end: 14 * 60 + 35, timeStr: '13:05 – 14:35' }
     ];
 
     var DAYS_MAP = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
     var DAY_IDS = ['day-sun', 'day-mon', 'day-tue', 'day-wed', 'day-thu', 'day-fri', 'day-sat'];
 
-    /* --- 1. Управление вкладками --- */
+    /* --- 1. Управление вкладками (устарело: интерфейс теперь единый) --- */
     function switchTab(tabId, btnElement) {
-        try {
-            forEachElem('.tab-content', function(el) { el.classList.remove('active'); });
-            forEachElem('.tab-btn', function(btn) { btn.classList.remove('active'); });
-            
-            var targetTab = document.getElementById('tab-' + tabId);
-            if (targetTab) targetTab.classList.add('active');
-            if (btnElement) btnElement.classList.add('active');
-        } catch (err) {
-            console.error('switchTab error:', err);
-        }
+        // Оставлено для обратной совместимости
     }
 
     /* --- 2. Плавный скролл к дню --- */
     function scrollToDay(dayId) {
         try {
-            var lessonsTabBtn = document.querySelector('.tabs-nav .tab-btn');
-            if (lessonsTabBtn) switchTab('lessons', lessonsTabBtn);
+            var shortDay = dayId.replace('day-', '');
+            forEachElem('.day-jump-btn', function(btn) {
+                btn.classList.remove('active');
+            });
+            var activeBtn = document.getElementById('nav-btn-' + shortDay);
+            if (activeBtn) activeBtn.classList.add('active');
 
             var target = document.getElementById(dayId);
             if (target) {
@@ -1583,6 +1721,11 @@
                 themeName = 'daisy';
             }
 
+            var metaTheme = document.getElementById('meta-theme-color');
+            if (metaTheme) {
+                metaTheme.setAttribute('content', themeName === 'dark' ? '#0b0f17' : (themeName === 'neutral' ? '#f1f5f9' : '#ffb6c1'));
+            }
+
             safeStorage.setItem('schedule_theme', themeName);
         } catch (err) {
             console.error('setTheme error:', err);
@@ -1602,6 +1745,10 @@
             if (activeBtn) activeBtn.classList.add('active');
             
             safeStorage.setItem('schedule_subgroup', groupVal);
+
+            if (currentHighlightRawKeyword) {
+                applyHighlight(currentHighlightRawKeyword);
+            }
         } catch (err) {
             console.error('setSubgroup error:', err);
         }
@@ -1646,6 +1793,32 @@
             var parity = getWeekParity(now);
             var parityBadge = document.getElementById('week-parity-badge');
             if (parityBadge) parityBadge.textContent = parity.label;
+
+            // Подсветка актуальности занятий по чётности недели
+            forEachElem('.parity-indicator', function(el) {
+                var pType = el.getAttribute('data-parity-type');
+                if (pType === 'even') {
+                    if (parity.isEven) {
+                        el.classList.add('parity-active');
+                        el.classList.remove('parity-inactive');
+                        el.title = 'Занятие на текущей (чётной) неделе';
+                    } else {
+                        el.classList.add('parity-inactive');
+                        el.classList.remove('parity-active');
+                        el.title = 'Занятие на следующей неделе';
+                    }
+                } else if (pType === 'odd') {
+                    if (!parity.isEven) {
+                        el.classList.add('parity-active');
+                        el.classList.remove('parity-inactive');
+                        el.title = 'Занятие на текущей (нечётной) неделе';
+                    } else {
+                        el.classList.add('parity-inactive');
+                        el.classList.remove('parity-active');
+                        el.title = 'Занятие на следующей неделе';
+                    }
+                }
+            });
 
             // 2. Подсветка карточки сегодняшнего дня
             forEachElem('.day-card', function(card) { card.classList.remove('is-today'); });
@@ -1765,7 +1938,7 @@
         } catch (e) {}
     }
 
-    function fallbackCopy(text) {
+    function fallbackCopy(text, customMsg) {
         try {
             var textarea = document.createElement('textarea');
             textarea.value = text;
@@ -1775,38 +1948,130 @@
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            showToast('Расписание на сегодня скопировано!');
+            showToast(customMsg || 'Расписание скопировано!');
         } catch (e) {
             showToast('Не удалось скопировать');
         }
     }
 
-    function copyTodaySchedule() {
+    /* Подсветка преподавателей и аудиторий по клику */
+    var currentHighlightRawKeyword = null;
+    var currentHighlightClean = null;
+
+    function isElementVisibleForSubgroup(el, currentSubgroup) {
+        if (!el) return false;
+        if (currentSubgroup === '1') {
+            if (el.classList && el.classList.contains('group-2')) return false;
+            if (el.closest && el.closest('.group-2')) return false;
+        } else if (currentSubgroup === '2') {
+            if (el.classList && el.classList.contains('group-1')) return false;
+            if (el.closest && el.closest('.group-1')) return false;
+        }
+        return true;
+    }
+
+    function highlightFilter(keyword) {
+        try {
+            if (!keyword) return;
+            var cleanWord = keyword.replace(/^(ст\.пр\.|доц\.|пр\.|проф\.|ст\. преп\.)\s*/i, '').trim();
+            if (currentHighlightClean && currentHighlightClean.toLowerCase() === cleanWord.toLowerCase()) {
+                clearHighlight();
+                showToast('Подсветка снята');
+                return;
+            }
+            applyHighlight(keyword);
+        } catch (e) {
+            console.error('highlightFilter error:', e);
+        }
+    }
+
+    function applyHighlight(keyword) {
+        clearHighlightDOM();
+        currentHighlightRawKeyword = keyword;
+
+        var cleanWord = keyword.replace(/^(ст\.пр\.|доц\.|пр\.|проф\.|ст\. преп\.)\s*/i, '').trim();
+        currentHighlightClean = cleanWord;
+
+        var isTeacher = /^[А-ЯЁ]\.[А-ЯЁ]?\.\s*[А-ЯЁа-яё]+/i.test(cleanWord) || /^(ст\.пр\.|доц\.|пр\.|проф\.|ст\. преп\.)\s*/i.test(keyword);
+        var searchLower = cleanWord.toLowerCase();
+        if (isTeacher) {
+            var words = cleanWord.split(/\s+/);
+            var surname = words[words.length - 1];
+            if (surname && surname.length > 2) {
+                searchLower = surname.toLowerCase();
+            }
+        }
+
+        var currentSubgroup = document.body.getAttribute('data-filter-subgroup') || 'all';
+        var targets = document.querySelectorAll('.clickable');
+        var matchedLessons = [];
+
+        for (var i = 0; i < targets.length; i++) {
+            var el = targets[i];
+            if (!isElementVisibleForSubgroup(el, currentSubgroup)) {
+                continue;
+            }
+
+            var text = (el.textContent || '').toLowerCase();
+            if (text.indexOf(searchLower) !== -1) {
+                el.classList.add('highlighted-match');
+                var parentItem = el.closest ? el.closest('.lesson-item') : null;
+                if (parentItem && matchedLessons.indexOf(parentItem) === -1) {
+                    parentItem.classList.add('highlighted-parent');
+                    matchedLessons.push(parentItem);
+                }
+            }
+        }
+
+        var groupLabel = currentSubgroup === '1' ? ' (1 группа)' : (currentSubgroup === '2' ? ' (2 группа)' : '');
+        showToast('Найдено пар: ' + matchedLessons.length + ' (' + cleanWord + ')' + groupLabel);
+    }
+
+    function clearHighlightDOM() {
+        forEachElem('.highlighted-match', function(el) { el.classList.remove('highlighted-match'); });
+        forEachElem('.highlighted-parent', function(el) { el.classList.remove('highlighted-parent'); });
+    }
+
+    function clearHighlight() {
+        currentHighlightRawKeyword = null;
+        currentHighlightClean = null;
+        clearHighlightDOM();
+    }
+
+    /* Копирование расписания на сегодня или на завтра */
+    function copyScheduleForDay(dayType) {
         try {
             var now = new Date();
-            var currentDayIndex = now.getDay();
+            var targetDate = now;
+            var dayLabel = 'сегодня';
+            if (dayType === 'tomorrow') {
+                targetDate = new Date(now.getTime() + 86400000);
+                dayLabel = 'завтра';
+            }
+
+            var currentDayIndex = targetDate.getDay();
             var currentSubgroup = document.body.getAttribute('data-filter-subgroup') || 'all';
 
             if (currentDayIndex === 0) {
-                showToast('Сегодня воскресенье — пар нет!');
+                showToast(dayType === 'tomorrow' ? 'Завтра воскресенье — пар нет!' : 'Сегодня воскресенье — пар нет!');
                 return;
             }
 
-            var todayCardId = DAY_IDS[currentDayIndex];
-            var todayCard = document.getElementById(todayCardId);
-            if (!todayCard) return;
+            var cardId = DAY_IDS[currentDayIndex];
+            var targetCard = document.getElementById(cardId);
+            if (!targetCard) return;
 
-            var dateStr = getFormattedDate(now);
-            var parity = getWeekParity(now);
-            var groupNote = currentSubgroup === '1' ? ' (1 подгруппа)' : (currentSubgroup === '2' ? ' (2 подгруппа)' : '');
+            var dateStr = getFormattedDate(targetDate);
+            var parity = getWeekParity(targetDate);
+            var groupNote = currentSubgroup === '1' ? ' (1 группа)' : (currentSubgroup === '2' ? ' (2 группа)' : '');
             
             var textLines = [
-                'Расписание на ' + dateStr + groupNote + ':',
+                'Расписание на ' + dayLabel + ' (' + dateStr + ')' + groupNote + ':',
                 '(' + parity.label + ')',
                 '------------------------------------'
             ];
 
-            var rows = todayCard.querySelectorAll('.lesson-item');
+            var rows = targetCard.querySelectorAll('.lesson-item');
             for (var r = 0; r < rows.length; r++) {
                 var row = rows[r];
                 var num = row.getAttribute('data-lesson-num') || '';
@@ -1827,32 +2092,49 @@
                 var teacherElem = row.querySelector('.teacher');
                 var roomElem = row.querySelector('.room');
 
+                function formatLessonTextForCopy(elem) {
+                    if (!elem) return '';
+                    var clone = elem.cloneNode(true);
+                    var badges = clone.querySelectorAll('.type-badge');
+                    for (var bIdx = 0; bIdx < badges.length; bIdx++) {
+                        var bEl = badges[bIdx];
+                        bEl.textContent = ' (' + bEl.textContent.trim() + ')';
+                    }
+                    var firstSpan = clone.querySelector('span:first-child');
+                    if (firstSpan && firstSpan.textContent.indexOf('Группа') !== -1) {
+                        firstSpan.parentNode.removeChild(firstSpan);
+                    }
+                    return clone.textContent.replace(/\s+/g, ' ').trim();
+                }
+
                 if (sharedTitle) {
-                    subject = sharedTitle.textContent.trim();
-                    teacher = teacherElem ? teacherElem.textContent.trim() : '';
-                    room = roomElem ? roomElem.textContent.trim() : '';
+                    subject = formatLessonTextForCopy(sharedTitle);
+                    var metaElem = row.querySelector('.meta-info');
+                    if (metaElem) subject += ' ' + metaElem.textContent.trim();
+                    teacher = teacherElem ? teacherElem.textContent.replace(/\s+/g, ' ').trim() : '';
+                    room = roomElem ? roomElem.textContent.replace(/\s+/g, ' ').trim() : '';
                 } else {
                     var g1Elem = row.querySelector('.group-col.group-1');
                     var g2Elem = row.querySelector('.group-col.group-2');
-                    var t1Elem = row.querySelector('.subgroup-part.group-1');
-                    var t2Elem = row.querySelector('.subgroup-part.group-2');
+                    var t1Elem = row.querySelector('.teacher .subgroup-part.group-1');
+                    var t2Elem = row.querySelector('.teacher .subgroup-part.group-2');
                     var r1Elem = row.querySelector('.room .subgroup-part.group-1');
                     var r2Elem = row.querySelector('.room .subgroup-part.group-2');
 
                     if (currentSubgroup === '1') {
-                        subject = g1Elem ? g1Elem.textContent.replace('Группа 1', '').trim() : '';
-                        teacher = t1Elem ? t1Elem.textContent.trim() : '';
-                        room = r1Elem ? r1Elem.textContent.trim() : '';
+                        subject = formatLessonTextForCopy(g1Elem);
+                        teacher = t1Elem ? t1Elem.textContent.replace(/\s+/g, ' ').trim() : '';
+                        room = r1Elem ? r1Elem.textContent.replace(/\s+/g, ' ').trim() : '';
                     } else if (currentSubgroup === '2') {
-                        subject = g2Elem ? g2Elem.textContent.replace('Группа 2', '').trim() : '';
-                        teacher = t2Elem ? t2Elem.textContent.trim() : '';
-                        room = r2Elem ? r2Elem.textContent.trim() : '';
+                        subject = formatLessonTextForCopy(g2Elem);
+                        teacher = t2Elem ? t2Elem.textContent.replace(/\s+/g, ' ').trim() : '';
+                        room = r2Elem ? r2Elem.textContent.replace(/\s+/g, ' ').trim() : '';
                     } else {
-                        var g1Text = g1Elem ? g1Elem.textContent.replace('Группа 1', '').trim() : '';
-                        var g2Text = g2Elem ? g2Elem.textContent.replace('Группа 2', '').trim() : '';
+                        var g1Text = formatLessonTextForCopy(g1Elem);
+                        var g2Text = formatLessonTextForCopy(g2Elem);
                         subject = '[Гр.1: ' + g1Text + '] / [Гр.2: ' + g2Text + ']';
-                        teacher = teacherElem ? teacherElem.textContent.trim() : '';
-                        room = roomElem ? roomElem.textContent.trim() : '';
+                        teacher = teacherElem ? teacherElem.textContent.replace(/\s+/g, ' ').trim() : '';
+                        room = roomElem ? roomElem.textContent.replace(/\s+/g, ' ').trim() : '';
                     }
                 }
 
@@ -1863,19 +2145,24 @@
             }
 
             var fullText = textLines.join('\n');
+            var successMsg = 'Расписание на ' + dayLabel + ' скопировано!';
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(fullText).then(function() {
-                    showToast('Расписание на сегодня скопировано!');
+                    showToast(successMsg);
                 }).catch(function() {
-                    fallbackCopy(fullText);
+                    fallbackCopy(fullText, successMsg);
                 });
             } else {
-                fallbackCopy(fullText);
+                fallbackCopy(fullText, successMsg);
             }
         } catch (err) {
-            console.error('copyTodaySchedule error:', err);
+            console.error('copyScheduleForDay error:', err);
         }
+    }
+
+    function copyTodaySchedule() {
+        copyScheduleForDay('today');
     }
 
     // Привязываем функции к объекту window для 100% надёжности вызова из inline onclick
@@ -1884,8 +2171,90 @@
     window.setTheme = setTheme;
     window.setSubgroup = setSubgroup;
     window.copyTodaySchedule = copyTodaySchedule;
+    window.copyScheduleForDay = copyScheduleForDay;
+    window.highlightFilter = highlightFilter;
+    window.clearHighlight = clearHighlight;
 
-    /* --- 9. Инициализация при загрузке документа --- */
+    /* --- 9. Автоматическая подсветка дня при скролле (Scroll Spy) --- */
+    function initScrollSpy() {
+        var dayCards = Array.from(document.querySelectorAll('.day-card[id^="day-"]'));
+        if (!dayCards.length) return;
+
+        var navBar = document.querySelector('.days-quick-nav');
+
+        function setActiveDay(shortDay) {
+            var activeId = 'nav-btn-' + shortDay;
+            var currentActive = document.querySelector('.day-jump-btn.active');
+            if (currentActive && currentActive.id === activeId) return;
+
+            forEachElem('.day-jump-btn', function(btn) {
+                if (btn.id === activeId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        var isTicking = false;
+        function updateActiveByScroll() {
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+
+            // 1. Если прокручено до самого низа (или в пределах 60px от конца) — гарантированно суббота
+            if (scrollY + windowHeight >= scrollHeight - 60) {
+                var lastId = dayCards[dayCards.length - 1].id.replace('day-', '');
+                setActiveDay(lastId);
+                return;
+            }
+
+            // 2. Если в самом верху (до первой карточки) — понедельник
+            if (scrollY < 60) {
+                var firstId = dayCards[0].id.replace('day-', '');
+                setActiveDay(firstId);
+                return;
+            }
+
+            // 3. Вычисляем линию отсечки под sticky-панелью
+            var navBottom = navBar ? navBar.getBoundingClientRect().bottom : 60;
+            var targetLine = navBottom + 35;
+
+            var chosenDay = null;
+            for (var i = 0; i < dayCards.length; i++) {
+                var card = dayCards[i];
+                var rect = card.getBoundingClientRect();
+
+                if (rect.top <= targetLine && rect.bottom > targetLine) {
+                    chosenDay = card.id.replace('day-', '');
+                    break;
+                }
+                if (rect.top <= targetLine) {
+                    chosenDay = card.id.replace('day-', '');
+                }
+            }
+
+            if (chosenDay) {
+                setActiveDay(chosenDay);
+            }
+        }
+
+        function onScroll() {
+            if (!isTicking) {
+                window.requestAnimationFrame(function() {
+                    updateActiveByScroll();
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        updateActiveByScroll();
+    }
+
+    /* --- 10. Инициализация при загрузке документа --- */
     function initApp() {
         try {
             var savedTheme = safeStorage.getItem('schedule_theme') || 'daisy';
@@ -1896,6 +2265,13 @@
 
             updateLiveStatus();
             setInterval(updateLiveStatus, 30000);
+            initScrollSpy();
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' || e.keyCode === 27) {
+                    clearHighlight();
+                }
+            });
         } catch (e) {
             console.error('Init error:', e);
         }
