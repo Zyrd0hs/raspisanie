@@ -715,24 +715,32 @@
             transition: background 0.18s ease, box-shadow 0.18s ease;
         }
 
-        .lesson-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        body.theme-daisy .lesson-item:hover {
-            background: rgba(255, 255, 255, 0.45);
-        }
-
-        body.theme-neutral .lesson-item:hover {
-            background: #f8fafc;
+        .lesson-item.shared-row {
+            background: var(--lesson-shared-bg);
         }
 
         .lesson-item:last-child {
             border-bottom: none;
         }
 
-        .lesson-item.shared-row {
-            background: var(--lesson-shared-bg);
+        .lesson-item:hover,
+        .lesson-item.shared-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        body.theme-daisy .lesson-item:hover,
+        body.theme-daisy .lesson-item.shared-row:hover {
+            background: rgba(255, 255, 255, 0.48);
+        }
+
+        body.theme-neutral .lesson-item:hover,
+        body.theme-neutral .lesson-item.shared-row:hover {
+            background: #f1f5f9;
+        }
+
+        body.theme-dark .lesson-item:hover,
+        body.theme-dark .lesson-item.shared-row:hover {
+            background: rgba(38, 52, 77, 0.95);
         }
 
         /* Подсветка текущей активной пары */
