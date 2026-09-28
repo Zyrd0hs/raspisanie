@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb7185"/>
+      <stop offset="100%" stop-color="#e11d48"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Squircle -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Petal Shadow -->
+  <g transform="translate(32, 33.5)" fill="rgba(159, 18, 57, 0.35)">
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(45)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(90)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(135)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(180)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(225)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(270)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(315)" />
+  </g>
+
+  <!-- Crisp White Daisy Petals -->
+  <g transform="translate(32, 32)" fill="#ffffff">
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(45)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(90)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(135)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(180)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(225)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(270)" />
+    <ellipse cx="0" cy="-14.5" rx="4.2" ry="8.8" transform="rotate(315)" />
+    
+    <!-- Warm Golden Center with Timetable Clock Hands at 8:00 -->
+    <circle cx="0" cy="0" r="8.2" fill="#fbbf24" stroke="#d97706" stroke-width="1.4"/>
+    <path d="M0 -4.2 V0 H3.2" stroke="#92400e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
