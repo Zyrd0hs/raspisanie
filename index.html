@@ -14,6 +14,25 @@
     <link rel="alternate icon" type="image/png" href="favicon.png?v=2">
     <link rel="shortcut icon" href="favicon.png?v=2">
     <link rel="apple-touch-icon" href="favicon.png?v=2">
+    <!-- Мгновенное применение сохранённой темы до отрисовки первого кадра (защита от мигания "Ромашек") -->
+    <script>
+        (function() {
+            try {
+                var theme = localStorage.getItem('schedule_theme');
+                if (theme === 'dark' || theme === 'neutral') {
+                    document.documentElement.classList.add('theme-' + theme);
+                    var meta = document.getElementById('meta-theme-color');
+                    if (meta) {
+                        meta.setAttribute('content', theme === 'dark' ? '#0b0f17' : '#f1f5f9');
+                    }
+                }
+                var subgroup = localStorage.getItem('schedule_subgroup');
+                if (subgroup === '1' || subgroup === '2') {
+                    document.documentElement.setAttribute('data-filter-subgroup', subgroup);
+                }
+            } catch (e) {}
+        })();
+    </script>
     <style>
         /* =========================================================
            1. ЦВЕТОВЫЕ ТЕМЫ (CSS Custom Properties)
@@ -107,6 +126,7 @@
         }
 
         /* Тема 2: Нейтральная светлая (Slate / Minimalist Light) */
+        :root.theme-neutral,
         body.theme-neutral {
             --bg-color: #f1f5f9;
             --bg-image: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
@@ -189,6 +209,7 @@
         }
 
         /* Тема 3: Тёмная (Dark Slate / Deep Graphite) */
+        :root.theme-dark,
         body.theme-dark {
             --bg-color: #090d16;
             --bg-image: linear-gradient(180deg, #0d121d 0%, #060910 100%);
@@ -458,6 +479,7 @@
             background: rgba(0, 0, 0, 0.06);
         }
 
+        :root.theme-dark .clickable:hover,
         body.theme-dark .clickable:hover {
             background: rgba(255, 255, 255, 0.12);
         }
@@ -537,23 +559,34 @@
             border: var(--badge-lab-border);
         }
 
-        /* Примечание по немецкому языку */
+        /* Примечание / сноска по немецкому языку */
         .sub-lang-note {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--meta-color);
             margin-top: 5px;
-            font-style: italic;
+            padding: 2px 7px;
+            background: rgba(128, 128, 128, 0.08);
+            border: 1px solid var(--ctrl-pill-border);
+            border-radius: 6px;
             line-height: 1.35;
             text-transform: none;
+            display: inline-block;
+            font-style: normal;
+        }
+
+        .sub-lang-label {
+            opacity: 0.85;
+            margin-right: 3px;
+            font-weight: 500;
         }
 
         .sub-lang-note .clickable {
-            display: inline-block;
+            display: inline;
             font-style: normal;
             text-transform: none;
             font-weight: 600;
-            padding: 0 4px;
-            margin: 0 1px;
+            padding: 0;
+            margin: 0;
             vertical-align: baseline;
             white-space: nowrap;
         }
@@ -843,21 +876,21 @@
         }
 
         /* Режимы фильтрации подгрупп */
-        body[data-filter-subgroup="1"] .group-col.group-2 {
+        [data-filter-subgroup="1"] .group-col.group-2 {
             display: none !important;
         }
-        body[data-filter-subgroup="2"] .group-col.group-1 {
+        [data-filter-subgroup="2"] .group-col.group-1 {
             display: none !important;
         }
-        body[data-filter-subgroup="1"] .groups-grid,
-        body[data-filter-subgroup="2"] .groups-grid {
+        [data-filter-subgroup="1"] .groups-grid,
+        [data-filter-subgroup="2"] .groups-grid {
             grid-template-columns: 1fr !important;
         }
 
-        body[data-filter-subgroup="1"] .subgroup-part.group-2,
-        body[data-filter-subgroup="2"] .subgroup-part.group-1,
-        body[data-filter-subgroup="1"] .subgroup-sep,
-        body[data-filter-subgroup="2"] .subgroup-sep {
+        [data-filter-subgroup="1"] .subgroup-part.group-2,
+        [data-filter-subgroup="2"] .subgroup-part.group-1,
+        [data-filter-subgroup="1"] .subgroup-sep,
+        [data-filter-subgroup="2"] .subgroup-sep {
             display: none !important;
         }
 
@@ -892,6 +925,10 @@
             border-radius: 6px;
             font-weight: 600;
             font-size: 0.8rem;
+        }
+
+        .room:empty {
+            display: none;
         }
 
         .meta-info {
@@ -1056,7 +1093,7 @@
                 <span>Понедельник</span>
                 <div class="day-header-right">
                     <span class="today-indicator-badge" style="display:none;">Сегодня</span>
-                    <span class="day-header-badge">4 пары</span>
+                    <span class="day-header-badge">5 пар</span>
                 </div>
             </div>
             <div class="schedule-list">
@@ -1125,10 +1162,31 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('И.А. Четвериков')">И.А. Четвериков</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 110')">к. 2, 110</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 122')">к. Б, 122</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 122')">к. 2, 122</span>
                             </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-item" data-lesson-num="5">
+                    <div class="lesson-num-box">
+                        <span>5</span>
+                        <span class="lesson-time-micro">14:45</span>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="groups-grid">
+                            <div class="group-col group-1"><span class="group-label">Группа 1</span>Кураторский час</div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>Кураторский час</div>
+                        </div>
+                        <div class="lesson-footer">
+                            <span class="teacher">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('Д.В. Кулакова')">Д.В. Кулакова</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Е.В. Тимотина')">Е.В. Тимотина</span>
+                            </span>
+                            <span class="room"></span>
                         </div>
                     </div>
                 </div>
@@ -1162,9 +1220,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Л.В. Колодка')">Л.В. Колодка</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 122')">к. Б, 122</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 122')">к. 2, 122</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 110')">к. 2, 110</span>
                             </span>
                         </div>
                     </div>
@@ -1181,7 +1239,7 @@
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher clickable" onclick="highlightFilter('Е.К. Бешляга')">Е.К. Бешляга</span>
-                            <span class="room clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 2, 110')">к. 2, 110</span>
                         </div>
                     </div>
                 </div>
@@ -1195,11 +1253,11 @@
                         <div class="groups-grid">
                             <div class="group-col group-1">
                                 <span class="group-label">Группа 1</span>Речевая коммуникация и самопрезентация в PR <span class="type-badge practice">практика</span>
-                                <span class="meta-info parity-indicator" data-parity-type="even">(Чет.)</span>
+                                <span class="parity-indicator" data-parity-type="even">Чет.</span>
                             </div>
                             <div class="group-col group-2">
                                 <span class="group-label">Группа 2</span>Речевая коммуникация и самопрезентация в PR <span class="type-badge practice">практика</span>
-                                <span class="meta-info parity-indicator" data-parity-type="odd">(Нечет.)</span>
+                                <span class="parity-indicator" data-parity-type="odd">Нечет.</span>
                             </div>
                         </div>
                         <div class="lesson-footer">
@@ -1209,9 +1267,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('С.Н. Солянкина')">С.Н. Солянкина</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 102')">к. Б, 102</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 102')">к. 2, 102</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 102')">к. Б, 102</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 102')">к. 2, 102</span>
                             </span>
                         </div>
                     </div>
@@ -1229,7 +1287,7 @@
                             </div>
                             <div class="group-col group-2">
                                 <span class="group-label">Группа 2</span>Иностранный язык (английский) <span class="type-badge practice">практика</span>
-                                <div class="sub-lang-note">нем.: <span class="clickable" onclick="highlightFilter('А.В. Ледовская')">А.В. Ледовская</span> (<span class="clickable" onclick="highlightFilter('к. Б, 203')">к. Б, 203</span>)</div>
+                                <div class="sub-lang-note"><span class="sub-lang-label">Немецкий язык:</span> <span class="clickable" onclick="highlightFilter('А.В. Ледовская')">А.В. Ледовская</span>, <span class="clickable" onclick="highlightFilter('к. 2, 203')">к. 2, 203</span></div>
                             </div>
                         </div>
                         <div class="lesson-footer">
@@ -1239,9 +1297,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('О.Н. Абахина')">О.Н. Абахина</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 106')">к. 2, 106</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 106')">к. 2, 106</span>
                             </span>
                         </div>
                     </div>
@@ -1308,9 +1366,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Т.В. Щерба')">Т.В. Щерба</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 110')">к. 2, 110</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 114')">к. Б, 114</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 114')">к. 2, 114</span>
                             </span>
                         </div>
                     </div>
@@ -1333,9 +1391,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('И.И. Мирошникова')">И.И. Мирошникова</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 114')">к. Б, 114</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 114')">к. 2, 114</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 110')">к. 2, 110</span>
                             </span>
                         </div>
                     </div>
@@ -1361,8 +1419,11 @@
                     <div class="lesson-content">
                         <div class="groups-grid">
                             <div class="group-col group-1">
-                                <span class="group-label">Группа 1</span>Цифровой инструментарий в PR <span class="type-badge lab">лекция / лаб.</span>
-                                <span class="meta-info">(Чет. 1 гр. / Нечет 2 гр.)</span>
+                                <span class="group-label">Группа 1</span>Цифровой инструментарий в PR <span class="type-badge lab">лекция / лабораторная</span>
+                                <div class="parity-badges-box" style="margin-top: 3px; display: flex; gap: 4px; flex-wrap: wrap;">
+                                    <span class="parity-indicator" data-parity-type="even">Чет. 1 подгруппа</span>
+                                    <span class="parity-indicator" data-parity-type="odd">Нечет. 2 подгруппа</span>
+                                </div>
                             </div>
                             <div class="group-col group-2">
                                 <span class="group-label">Группа 2</span>Основы редактирования <span class="type-badge lab">лекция / практика</span>
@@ -1375,26 +1436,43 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Н.В. Пильщикова')">Н.В. Пильщикова</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 219')">к. Б, 219</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 219')">к. 2, 219</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 106')">к. 2, 106</span>
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lesson-item shared-row" data-lesson-num="2">
+                <div class="lesson-item" data-lesson-num="2">
                     <div class="lesson-num-box">
                         <span>2</span>
                         <span class="lesson-time-micro">9:40</span>
                     </div>
                     <div class="lesson-content">
-                        <div class="lesson-title-row">
-                            <div class="lesson-title shared">Официальный язык (украинский) <span class="type-badge practice">практика</span></div>
+                        <div class="groups-grid">
+                            <div class="group-col group-1">
+                                <span class="group-label">Группа 1</span>Официальный язык (украинский) <span class="type-badge practice">практика</span>
+                            </div>
+                            <div class="group-col group-2">
+                                <span class="group-label">Группа 2</span>Цифровой инструментарий в PR <span class="type-badge lab">лекция / лабораторная</span>
+                                <div class="parity-badges-box" style="margin-top: 3px; display: flex; gap: 4px; flex-wrap: wrap;">
+                                    <span class="parity-indicator" data-parity-type="even">Чет. 1 подгруппа</span>
+                                    <span class="parity-indicator" data-parity-type="odd">Нечет. 2 подгруппа</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="lesson-footer">
-                            <span class="teacher clickable" onclick="highlightFilter('Е.Л. Якимович')">Е.Л. Якимович</span>
-                            <span class="room clickable" onclick="highlightFilter('к. Б, 102')">к. Б, 102</span>
+                            <span class="teacher">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('Е.Л. Якимович')">Е.Л. Якимович</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('О.Ю. Федоренко')">О.Ю. Федоренко</span>
+                            </span>
+                            <span class="room">
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 102')">к. 2, 102</span>
+                                <span class="subgroup-sep"> / </span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 219')">к. 2, 219</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -1407,11 +1485,14 @@
                     <div class="lesson-content">
                         <div class="lesson-title-row">
                             <div class="lesson-title shared">Цифровой инструментарий в PR <span class="type-badge lecture">лекция</span></div>
-                            <span class="meta-info">(Чет. 1 гр. / Нечет 2 гр.)</span>
+                            <div class="parity-badges-box" style="margin-top: 3px; display: flex; gap: 4px; flex-wrap: wrap;">
+                                <span class="parity-indicator" data-parity-type="even">Чет. 1 подгруппа</span>
+                                <span class="parity-indicator" data-parity-type="odd">Нечет. 2 подгруппа</span>
+                            </div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher clickable" onclick="highlightFilter('О.Ю. Федоренко')">О.Ю. Федоренко</span>
-                            <span class="room clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
+                            <span class="room clickable" onclick="highlightFilter('к. 2, 110')">к. 2, 110</span>
                         </div>
                     </div>
                 </div>
@@ -1428,7 +1509,7 @@
                             </div>
                             <div class="group-col group-2">
                                 <span class="group-label">Группа 2</span>Иностранный язык (английский) <span class="type-badge practice">практика</span>
-                                <div class="sub-lang-note">нем.: <span class="clickable" onclick="highlightFilter('А.В. Ледовская')">А.В. Ледовская</span> (<span class="clickable" onclick="highlightFilter('к. Б, 203')">к. Б, 203</span>)</div>
+                                <div class="sub-lang-note"><span class="sub-lang-label">Немецкий язык:</span> <span class="clickable" onclick="highlightFilter('А.В. Ледовская')">А.В. Ледовская</span>, <span class="clickable" onclick="highlightFilter('к. 2, 203')">к. 2, 203</span></div>
                             </div>
                         </div>
                         <div class="lesson-footer">
@@ -1438,9 +1519,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('О.Н. Абахина')">О.Н. Абахина</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 106')">к. 2, 106</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 106')">к. Б, 106</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 106')">к. 2, 106</span>
                             </span>
                         </div>
                     </div>
@@ -1475,9 +1556,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Л.В. Колодка')">Л.В. Колодка</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 114')">к. Б, 114</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 114')">к. 2, 114</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 122')">к. Б, 122</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 122')">к. 2, 122</span>
                             </span>
                         </div>
                     </div>
@@ -1500,9 +1581,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('И.И. Мирошникова')">И.И. Мирошникова</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 122')">к. Б, 122</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 122')">к. 2, 122</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 114')">к. Б, 114</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 114')">к. 2, 114</span>
                             </span>
                         </div>
                     </div>
@@ -1540,7 +1621,7 @@
                                 <span class="clickable" onclick="highlightFilter('Т.Н. Чебан')">Т.Н. Чебан</span>,
                                 <span class="clickable" onclick="highlightFilter('Е.С. Федотова')">Е.С. Федотова</span>
                             </span>
-                            <span class="room clickable" onclick="highlightFilter('Студ. город')">Студ. город</span>
+                            <span class="room clickable" onclick="highlightFilter('Стадион')">Стадион</span>
                         </div>
                     </div>
                 </div>
@@ -1590,9 +1671,9 @@
                                 <span class="subgroup-part group-2 clickable" onclick="highlightFilter('С.А. Осипова')">С.А. Осипова</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 110')">к. Б, 110</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 110')">к. 2, 110</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 308')">к. Б, 308</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 308')">к. 2, 308</span>
                             </span>
                         </div>
                     </div>
@@ -1606,21 +1687,18 @@
                     <div class="lesson-content">
                         <div class="groups-grid">
                             <div class="group-col group-1"><span class="group-label">Группа 1</span>Основы российской государственности <span class="type-badge practice">практика</span></div>
-                            <div class="group-col group-2">
-                                <span class="group-label">Группа 2</span>Цифровой инструментарий в PR <span class="type-badge lab">лекция / лаб.</span>
-                                <span class="meta-info">(Чет. 1 гр. / Нечет 2 гр.)</span>
-                            </div>
+                            <div class="group-col group-2"><span class="group-label">Группа 2</span>Официальный язык (украинский) <span class="type-badge practice">практика</span></div>
                         </div>
                         <div class="lesson-footer">
                             <span class="teacher">
                                 <span class="subgroup-part group-1 clickable" onclick="highlightFilter('С.А. Осипова')">С.А. Осипова</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('О.Ю. Федоренко')">О.Ю. Федоренко</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('Е.Л. Якимович')">Е.Л. Якимович</span>
                             </span>
                             <span class="room">
-                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. Б, 308')">к. Б, 308</span>
+                                <span class="subgroup-part group-1 clickable" onclick="highlightFilter('к. 2, 308')">к. 2, 308</span>
                                 <span class="subgroup-sep"> / </span>
-                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. Б, 202')">к. Б, 202</span>
+                                <span class="subgroup-part group-2 clickable" onclick="highlightFilter('к. 2, 106')">к. 2, 106</span>
                             </span>
                         </div>
                     </div>
@@ -1673,7 +1751,8 @@
         { num: 1, start: 8 * 60,       end: 9 * 60 + 30,  timeStr: '8:00 – 9:30' },
         { num: 2, start: 9 * 60 + 40,  end: 11 * 60 + 10, timeStr: '9:40 – 11:10' },
         { num: 3, start: 11 * 60 + 25, end: 12 * 60 + 55, timeStr: '11:25 – 12:55' },
-        { num: 4, start: 13 * 60 + 5,  end: 14 * 60 + 35, timeStr: '13:05 – 14:35' }
+        { num: 4, start: 13 * 60 + 5,  end: 14 * 60 + 35, timeStr: '13:05 – 14:35' },
+        { num: 5, start: 14 * 60 + 45, end: 16 * 60 + 15, timeStr: '14:45 – 16:15' }
     ];
 
     var DAYS_MAP = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
@@ -1713,7 +1792,9 @@
     function setTheme(themeName) {
         try {
             var body = document.body;
+            var doc = document.documentElement;
             body.classList.remove('theme-neutral', 'theme-dark');
+            doc.classList.remove('theme-neutral', 'theme-dark');
             
             forEachElem('[id^="btn-theme-"]', function(btn) {
                 btn.classList.remove('active');
@@ -1721,10 +1802,12 @@
 
             if (themeName === 'neutral') {
                 body.classList.add('theme-neutral');
+                doc.classList.add('theme-neutral');
                 var b1 = document.getElementById('btn-theme-neutral');
                 if (b1) b1.classList.add('active');
             } else if (themeName === 'dark') {
                 body.classList.add('theme-dark');
+                doc.classList.add('theme-dark');
                 var b2 = document.getElementById('btn-theme-dark');
                 if (b2) b2.classList.add('active');
             } else {
@@ -1748,6 +1831,7 @@
     function setSubgroup(groupVal) {
         try {
             document.body.setAttribute('data-filter-subgroup', groupVal);
+            document.documentElement.setAttribute('data-filter-subgroup', groupVal);
             
             forEachElem('[id^="btn-group-"]', function(btn) {
                 btn.classList.remove('active');
@@ -2112,6 +2196,11 @@
                         var bEl = badges[bIdx];
                         bEl.textContent = ' (' + bEl.textContent.trim() + ')';
                     }
+                    var pBadges = clone.querySelectorAll('.parity-indicator');
+                    for (var pIdx = 0; pIdx < pBadges.length; pIdx++) {
+                        var pEl = pBadges[pIdx];
+                        pEl.textContent = ' [' + pEl.textContent.trim() + ']';
+                    }
                     var firstSpan = clone.querySelector('span:first-child');
                     if (firstSpan && firstSpan.textContent.indexOf('Группа') !== -1) {
                         firstSpan.parentNode.removeChild(firstSpan);
@@ -2121,8 +2210,14 @@
 
                 if (sharedTitle) {
                     subject = formatLessonTextForCopy(sharedTitle);
-                    var metaElem = row.querySelector('.meta-info');
-                    if (metaElem) subject += ' ' + metaElem.textContent.trim();
+                    var parityBadges = row.querySelectorAll('.parity-indicator');
+                    if (parityBadges.length > 0) {
+                        var pTexts = [];
+                        for (var pi = 0; pi < parityBadges.length; pi++) {
+                            pTexts.push('[' + parityBadges[pi].textContent.trim() + ']');
+                        }
+                        subject += ' ' + pTexts.join(' ');
+                    }
                     teacher = teacherElem ? teacherElem.textContent.replace(/\s+/g, ' ').trim() : '';
                     room = roomElem ? roomElem.textContent.replace(/\s+/g, ' ').trim() : '';
                 } else {
